@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+
+    <title>Blackjack</title>
+  </head>
+  <body>
+    <h1>Blackjack</h1>
+    <p
+      onClick="window.location.reload()"
+      style="
+        font-size: 14px;
+        font-style: italic;
+        color: rgb(123, 161, 58);
+        cursor: pointer;
+      "
+    >
+      Restart?
+    </p>
+    <p id="message-el">Want to play a round?</p>
+    <p id="dealer-cards-el">Dealer Cards:</p>
+    <p id="dealer-sum-el">Dealer sum:</p>
+    <p id="cards-el">Cards:</p>
+    <p id="sum-el">Sum:</p>
+    <button
+      id="hide-onclick"
+      onclick="startGame(); document.getElementById('hide-onclick').style.display = 'none'"
+    >
+      START GAME
+    </button>
+    <!-- 1. Create a NEW CARD button, make it run newCard() on click -->
+    <button onclick="drawNewCard()">HIT</button>
+    <button onclick="stand()">STAND</button>
+    <script src="index.js"></script>
+  </body>
+</html>
