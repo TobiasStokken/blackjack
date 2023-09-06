@@ -80,13 +80,12 @@ function renderCards() {
 async function checkForDealerWin() {
   if (dealerCards.reduce((a, b) => a + b) < 17) {
     dealerCards.push(Math.floor(Math.random() * 16) + 2);
-    console.log(dealerCards);
+
     for (i = 0; i < dealerCards.length; i++) {
       if (dealerCards[i] > 11) {
         dealerCards[i] = 10;
       }
     }
-    console.log(dealerCards);
     renderCards();
     await new Promise((r) => setTimeout(r, 2000));
     checkForDealerWin();
@@ -112,7 +111,6 @@ function checkForWin(sum) {
     message = "Do you want to draw a new card?";
   } else if (sum === 21) {
     message = "Youve got Blackjack!";
-    console.log(playerCards.reduce((a, b) => a + b));
     hasBlackJack = true;
   } else if (
     playerCards.length > 5 &&
