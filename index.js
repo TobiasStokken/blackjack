@@ -3,6 +3,7 @@ let playerCards = [
   Math.floor(Math.random() * 13) + 2,
 ];
 let dealerCards = [Math.floor(Math.random() * 16) + 2];
+console.log(dealerCards);
 let hasBlackJack = false;
 let dealerBlackJack = false;
 let isAlive = true;
@@ -70,7 +71,11 @@ function stand() {
 }
 
 function renderCards() {
-  dealerCardsEl.textContent = "Dealer Cards: " + dealerCards;
+  if (dealerCards.length < 2) {
+    dealerCardsEl.textContent = "Dealer Cards: " + dealerCards + ",?";
+  } else {
+    dealerCardsEl.textContent = "Dealer Cards: " + dealerCards;
+  }
   dealerSumEl.textContent =
     "Dealer sum: " + dealerCards.reduce((a, b) => a + b);
   cardsEl.textContent = "Cards: " + playerCards;
@@ -90,18 +95,25 @@ async function checkForDealerWin() {
     await new Promise((r) => setTimeout(r, 2000));
     checkForDealerWin();
   } else if (dealerCards.reduce((a, b) => a + b) > 17) {
-    if (
-      22 > dealerCards.reduce((a, b) => a + b) &&
+    console.log("Dealer Cards Sum: " + dealerCards.reduce((a, b) => a + b));
+    console.log("Player Cards Sum: " + playerCards.reduce((a, b) => a + b));
+    if (dealerCards.reduce((a, b) => a + b) > 21) {
+      messageEl.textContent = "Dealer busted";
+    } else if (
       dealerCards.reduce((a, b) => a + b) > playerCards.reduce((a, b) => a + b)
     ) {
-      messageEl.textContent = "Dealer won";
+      messageEl.textContent = "Dealer Wins";
+    } else if (
+      dealerCards.reduce((a, b) => a + b) < playerCards.reduce((a, b) => a + b)
+    ) {
+      messageEl.textContent = "You win";
     } else if (
       dealerCards.reduce((a, b) => a + b) ===
       playerCards.reduce((a, b) => a + b)
     ) {
       messageEl.textContent = "No one wins";
     } else {
-      messageEl.textContent = "You won";
+      messageEl.textContent = "ERROR";
     }
   }
 }
