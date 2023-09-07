@@ -22,18 +22,21 @@
       Restart?
     </p>
     <p id="message-el">Want to play a round?</p>
-    <p id="dealer-cards-el">Dealer Cards:</p>
-    <p id="dealer-sum-el">Dealer sum:</p>
-    <p id="cards-el">Cards:</p>
-    <p id="sum-el">Sum:</p>
+    <p id="dealer-cards-el">Dealer Cards: ?,?</p>
+    <p id="dealer-sum-el">Dealer sum: ?</p>
+    <p id="cards-el">Cards: ?,?</p>
+    <p id="sum-el">Sum: ?</p>
     <button
       id="hide-onclick"
-      onclick="startGame(); document.getElementById('hide-onclick').style.display = 'none'"
+      onclick="startGame(); document.getElementById('hide-onclick').style.display = 'none'; document.getElementById('hide-onclick2').style.display = 'none'"
     >
       START GAME
     </button>
     <button onclick="drawNewCard()">HIT</button>
     <button onclick="stand()">STAND</button>
+    <p id="chips-el">Chips: ?</p>
+    <p id="bet-el">Current bet: ?</p>
+    <button id="hide-onclick2" onclick="changeBet()">Change bet</button>
     <script src="index.js"></script>
   </body>
 </html>

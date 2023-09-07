@@ -3,7 +3,6 @@ let playerCards = [
   Math.floor(Math.random() * 13) + 2,
 ];
 let dealerCards = [Math.floor(Math.random() * 16) + 2];
-console.log(dealerCards);
 let hasBlackJack = false;
 let dealerBlackJack = false;
 let isAlive = true;
@@ -14,7 +13,11 @@ let sumEl = document.getElementById("sum-el");
 let cardsEl = document.getElementById("cards-el");
 let dealerCardsEl = document.getElementById("dealer-cards-el");
 let dealerSumEl = document.getElementById("dealer-sum-el");
+let betEl = document.getElementById("bet-el");
+let chipsEl = document.getElementById("chips-el");
 let gameStarted = false;
+let chips = 200;
+let bet = 0;
 
 for (i = 0; i < playerCards.length; i++) {
   if (playerCards[i] > 11) {
@@ -56,6 +59,7 @@ function startGame() {
   if (dealerCards.reduce((a, b) => a + b) === 21) {
     messageEl.textContent = "You lost. Dealer got 21";
     dealerBlackJack = true;
+    chips = chips - bet;
     return;
   }
   gameStarted = true;
@@ -99,14 +103,17 @@ async function checkForDealerWin() {
     console.log("Player Cards Sum: " + playerCards.reduce((a, b) => a + b));
     if (dealerCards.reduce((a, b) => a + b) > 21) {
       messageEl.textContent = "Dealer busted";
+      chips = chips + bet;
     } else if (
       dealerCards.reduce((a, b) => a + b) > playerCards.reduce((a, b) => a + b)
     ) {
       messageEl.textContent = "Dealer Wins";
+      chips = chips - bet;
     } else if (
       dealerCards.reduce((a, b) => a + b) < playerCards.reduce((a, b) => a + b)
     ) {
       messageEl.textContent = "You win";
+      chips = chips + bet;
     } else if (
       dealerCards.reduce((a, b) => a + b) ===
       playerCards.reduce((a, b) => a + b)
@@ -115,6 +122,9 @@ async function checkForDealerWin() {
     } else {
       messageEl.textContent = "ERROR";
     }
+    isAlive = false;
+    betEl.textContent = "Current Bet: " + bet;
+    bet = 0;
   }
 }
 
@@ -124,6 +134,7 @@ function checkForWin(sum) {
   } else if (sum === 21) {
     message = "Youve got Blackjack!";
     hasBlackJack = true;
+    chips = chips + bet + bet;
   } else if (
     playerCards.length > 5 &&
     playerCards.reduce((a, b) => a + b) > 22
@@ -131,7 +142,30 @@ function checkForWin(sum) {
     message = "You won by the five card rule";
   } else {
     message = "Youre out of the game!";
+    chips = chips - bet;
     isAlive = false;
   }
   messageEl.textContent = message;
 }
+
+function changeBet() {
+  let newBet = prompt("How much do you want to bet");
+  if (newBet === null) {
+    newBet = 0;
+  }
+  if (newBet > chips) {
+    bet = chips;
+  } else {
+    bet = newBet;
+  }
+  betEl.textContent = "Current Bet: " + bet;
+}
+
+async function updateBets() {
+  setInterval(() => {
+    chipsEl.textContent = "Chips: " + chips;
+    betEl.textContent = "Current Bet: " + bet;
+  }, 1000);
+}
+
+updateBets();
