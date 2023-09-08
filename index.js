@@ -3,50 +3,29 @@ let playerCards = [
   Math.floor(Math.random() * 13) + 2,
 ];
 let dealerCards = [Math.floor(Math.random() * 16) + 2];
-let hasBlackJack = false;
-let dealerBlackJack = false;
-let isAlive = true;
+let gameOver = false;
 let hasStanded = false;
-let message = "";
-let messageEl = document.getElementById("message-el");
-let sumEl = document.getElementById("sum-el");
-let cardsEl = document.getElementById("cards-el");
-let dealerCardsEl = document.getElementById("dealer-cards-el");
-let dealerSumEl = document.getElementById("dealer-sum-el");
-let betEl = document.getElementById("bet-el");
-let chipsEl = document.getElementById("chips-el");
+const messageEl = document.getElementById("message-el");
+const sumEl = document.getElementById("sum-el");
+const cardsEl = document.getElementById("cards-el");
+const dealerCardsEl = document.getElementById("dealer-cards-el");
+const dealerSumEl = document.getElementById("dealer-sum-el");
+const betEl = document.getElementById("bet-el");
+const chipsEl = document.getElementById("chips-el");
 let gameStarted = false;
 let chips = 200;
 let bet = 0;
 
-for (i = 0; i < playerCards.length; i++) {
-  if (playerCards[i] > 11) {
-    playerCards[i] = 10;
-  }
-}
-
-for (i = 0; i < dealerCards.length; i++) {
-  if (dealerCards[i] > 11) {
-    dealerCards[i] = 10;
-  }
-}
+checkForIllegalValues(playerCards);
+checkForIllegalValues(dealerCards);
 
 function drawNewCard() {
-  if (!isAlive || hasBlackJack || dealerBlackJack || hasStanded) {
+  if (gameOver || hasStanded) {
     return;
   }
-  for (i = 0; i < playerCards.length; i++) {
-    if (playerCards[i] > 11) {
-      playerCards[i] = 10;
-    }
-  }
-  for (i = 0; i < dealerCards.length; i++) {
-    if (dealerCards[i] > 11) {
-      dealerCards[i] = 10;
-    }
-  }
-  playerCards.push(Math.floor(Math.random() * 10) + 2);
 
+  checkForIllegalValues(playerCards);
+  playerCards.push(Math.floor(Math.random() * 10) + 2);
   renderCards();
   checkForWin(playerCards.reduce((a, b) => a + b));
 }
@@ -58,7 +37,6 @@ function startGame() {
   renderCards();
   if (dealerCards.reduce((a, b) => a + b) === 21) {
     messageEl.textContent = "You lost. Dealer got 21";
-    dealerBlackJack = true;
     chips = chips - bet;
     return;
   }
@@ -67,7 +45,7 @@ function startGame() {
 }
 
 function stand() {
-  if (!isAlive || hasBlackJack || dealerBlackJack) {
+  if (gameOver) {
     return;
   }
   hasStanded = true;
@@ -75,6 +53,8 @@ function stand() {
 }
 
 function renderCards() {
+  console.log(playerCards);
+
   if (dealerCards.length < 2) {
     dealerCardsEl.textContent = "Dealer Cards: " + dealerCards + ",?";
   } else {
@@ -90,11 +70,7 @@ async function checkForDealerWin() {
   if (dealerCards.reduce((a, b) => a + b) < 17) {
     dealerCards.push(Math.floor(Math.random() * 16) + 2);
 
-    for (i = 0; i < dealerCards.length; i++) {
-      if (dealerCards[i] > 11) {
-        dealerCards[i] = 10;
-      }
-    }
+    checkForIllegalValues(dealerCards);
     renderCards();
     await new Promise((r) => setTimeout(r, 2000));
     checkForDealerWin();
@@ -122,30 +98,32 @@ async function checkForDealerWin() {
     } else {
       messageEl.textContent = "ERROR";
     }
-    isAlive = false;
+    console.log(chips);
     betEl.textContent = "Current Bet: " + bet;
     bet = 0;
+    gameOver = true;
+    refreshGame();
   }
 }
 
 function checkForWin(sum) {
   if (sum <= 20) {
-    message = "Do you want to draw a new card?";
+    messageEl.textContent = "Do you want to draw a new card?";
   } else if (sum === 21) {
-    message = "Youve got Blackjack!";
-    hasBlackJack = true;
+    messageEl.textContent = "Youve got Blackjack!";
     chips = chips + bet + bet;
+    refreshGame();
   } else if (
     playerCards.length > 5 &&
     playerCards.reduce((a, b) => a + b) > 22
   ) {
-    message = "You won by the five card rule";
+    messageEl.textContent = "You won by the five card rule";
+    refreshGame();
   } else {
-    message = "Youre out of the game!";
+    messageEl.textContent = "Youre out of the game!";
     chips = chips - bet;
-    isAlive = false;
+    refreshGame();
   }
-  messageEl.textContent = message;
 }
 
 function changeBet() {
@@ -161,9 +139,40 @@ function changeBet() {
   betEl.textContent = "Current Bet: " + bet;
 }
 
+async function refreshGame() {
+  await new Promise((r) => setTimeout(r, 3000));
+  document.getElementById("hide-onclick").style.display = "initial";
+  document.getElementById("hide-onclick2").style.display = "Initial";
+
+  startGame();
+
+  messageEl.textContent = "Want to play a round?";
+  dealerCardsEl.textContent = "Dealer Cards: ?,?";
+  dealerSumEl.textContent = "Dealer sum: ?";
+  cardsEl.textContent = "Cards: ?,?";
+  sumEl.textContent = "Sum: ?";
+  bet = 0;
+  playerCards = [
+    Math.floor(Math.random() * 13) + 2,
+    Math.floor(Math.random() * 13) + 2,
+  ];
+  dealerCards = [Math.floor(Math.random() * 16) + 2];
+  gameOver = false;
+  hasStanded = false;
+  gameStarted = false;
+}
+
+function checkForIllegalValues(list) {
+  for (i = 0; i < list.length; i++) {
+    if (list[i] > 11) {
+      list[i] = 10;
+    }
+  }
+}
+
 async function updateBets() {
   setInterval(() => {
-    chipsEl.textContent = "Chips: " + chips;
+    chipsEl.textContent = `Chips: ${chips}`;
     betEl.textContent = "Current Bet: " + bet;
   }, 1000);
 }
