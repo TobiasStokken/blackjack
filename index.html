@@ -21,10 +21,11 @@
       Restart?
     </p>
     <p id="message-el">Want to play a round?</p>
-    <p id="dealer-cards-el">Dealer Cards: ?,?</p>
+    <p>Dealer:</p>
+    <div id="dealer-cards-div"></div>
     <p id="dealer-sum-el">Dealer sum: ?</p>
-    <p id="cards-el">Cards: ?,?</p>
     <p id="sum-el">Sum: ?</p>
+    <div id="player-cards-div"></div>
     <button
       id="hide-onclick"
       onclick="startGame(); document.getElementById('hide-onclick').style.display = 'none'; document.getElementById('hide-onclick2').style.display = 'none'"
@@ -36,6 +37,7 @@
     <p id="chips-el">Chips: Loading...</p>
     <p id="bet-el">Current bet: Loading...</p>
     <button id="hide-onclick2" onclick="changeBet()">Change bet</button>
+
     <script src="index.js"></script>
   </body>
 </html>

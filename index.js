@@ -1,8 +1,75 @@
-let playerCards = [
-  Math.floor(Math.random() * 13) + 2,
-  Math.floor(Math.random() * 13) + 2,
+let cardStack = [
+  {
+    value: [11, 1],
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/sa.png",
+  },
+  {
+    value: 2,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/s2.png",
+  },
+  {
+    value: 3,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/s3.png",
+  },
+  {
+    value: 4,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/s4.png",
+  },
+  {
+    value: 5,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/s5.png",
+  },
+  {
+    value: 6,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/s6.png",
+  },
+  {
+    value: 7,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/s7.png",
+  },
+  {
+    value: 8,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/s8.png",
+  },
+  {
+    value: 9,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/s9.png",
+  },
+  {
+    value: 10,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/s10.png",
+  },
+  {
+    value: 10,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/sj.png",
+  },
+  {
+    value: 10,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/sq.png",
+  },
+  {
+    value: 10,
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/sk.png",
+  },
 ];
-let dealerCards = [Math.floor(Math.random() * 16) + 2];
+function showDealerCards(src, width) {
+  var img = document.createElement("img");
+  img.src = src;
+  img.width = width;
+  document.getElementById("dealer-cards-div").appendChild(img);
+}
+function showPlayerCards(src, width) {
+  var img = document.createElement("img");
+  img.src = src;
+  img.width = width;
+  document.getElementById("player-cards-div").appendChild(img);
+}
+
+let playerCards = [
+  Math.floor(Math.random() * 13),
+  Math.floor(Math.random() * 13),
+];
+let dealerCards = [Math.floor(Math.random() * 13)];
 let gameOver = false;
 let hasStanded = false;
 const messageEl = document.getElementById("message-el");
@@ -25,7 +92,7 @@ function drawNewCard() {
   }
 
   checkForIllegalValues(playerCards);
-  playerCards.push(Math.floor(Math.random() * 10) + 2);
+  playerCards.push(Math.floor(Math.random() * 13));
   renderCards();
   checkForWin(playerCards.reduce((a, b) => a + b));
 }
@@ -34,6 +101,12 @@ function startGame() {
   if (gameStarted) {
     return;
   }
+  showDealerCards(cardStack[dealerCards[0]].img, 100);
+  cardStack.splice(dealerCards[0]);
+  showPlayerCards(cardStack[playerCards[0]].img, 100);
+  cardStack.splice(playerCards[0]);
+  showPlayerCards(cardStack[playerCards[1]].img, 100);
+  cardStack.splice(playerCards[1]);
   renderCards();
   if (dealerCards.reduce((a, b) => a + b) === 21) {
     messageEl.textContent = "You lost. Dealer got 21";
@@ -51,24 +124,24 @@ function stand() {
   hasStanded = true;
   checkForDealerWin();
 }
-
 function renderCards() {
-  console.log(playerCards);
-
-  if (dealerCards.length < 2) {
-    dealerCardsEl.textContent = "Dealer Cards: " + dealerCards + ",?";
-  } else {
-    dealerCardsEl.textContent = "Dealer Cards: " + dealerCards;
+  let dealerSum = 0;
+  let playerSum = 0;
+  for (i = 0; i < dealerCards.length; i++) {
+    dealerSum = dealerSum + cardStack[dealerCards[i]].value;
   }
-  dealerSumEl.textContent =
-    "Dealer sum: " + dealerCards.reduce((a, b) => a + b);
-  cardsEl.textContent = "Cards: " + playerCards;
-  sumEl.textContent = "Sum: " + playerCards.reduce((a, b) => a + b);
+  for (i = 0; i < playerCards.length; i++) {
+    playerSum = playerSum + cardStack[playerCards[i]].value;
+  }
+
+  dealerSumEl.textContent = "Dealer sum: " + dealerSum;
+  sumEl.textContent = "Sum: " + playerSum;
 }
 
 async function checkForDealerWin() {
   if (dealerCards.reduce((a, b) => a + b) < 17) {
     dealerCards.push(Math.floor(Math.random() * 16) + 2);
+    showDealerCards(cardStack[dealerCards.length].img, 100);
 
     checkForIllegalValues(dealerCards);
     renderCards();
@@ -143,23 +216,22 @@ async function refreshGame() {
   await new Promise((r) => setTimeout(r, 3000));
   document.getElementById("hide-onclick").style.display = "initial";
   document.getElementById("hide-onclick2").style.display = "Initial";
-
-  startGame();
+  document.getElementById("dealer-cards-div");
+  document.getElementById("player-cards-div");
 
   messageEl.textContent = "Want to play a round?";
-  dealerCardsEl.textContent = "Dealer Cards: ?,?";
   dealerSumEl.textContent = "Dealer sum: ?";
-  cardsEl.textContent = "Cards: ?,?";
   sumEl.textContent = "Sum: ?";
   bet = 0;
   playerCards = [
-    Math.floor(Math.random() * 13) + 2,
-    Math.floor(Math.random() * 13) + 2,
+    Math.floor(Math.random() * 13) + 1,
+    Math.floor(Math.random() * 13) + 1,
   ];
-  dealerCards = [Math.floor(Math.random() * 16) + 2];
+  dealerCards = [Math.floor(Math.random() * 13) + 1];
   gameOver = false;
   hasStanded = false;
   gameStarted = false;
+  startGame();
 }
 
 function checkForIllegalValues(list) {
