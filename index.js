@@ -1,6 +1,7 @@
+// https://www.improvemagic.com/all-playing-cards-names-with-pictures/
 let cardStack = [
   {
-    value: [11, 1],
+    value: 1,
     img: "https://www.improvemagic.com/wp-content/uploads/2020/11/sa.png",
   },
   {
@@ -52,201 +53,49 @@ let cardStack = [
     img: "https://www.improvemagic.com/wp-content/uploads/2020/11/sk.png",
   },
 ];
-function showDealerCards(src, width) {
-  var img = document.createElement("img");
-  img.src = src;
-  img.width = width;
-  document.getElementById("dealer-cards-div").appendChild(img);
-}
-function showPlayerCards(src, width) {
-  var img = document.createElement("img");
-  img.src = src;
-  img.width = width;
-  document.getElementById("player-cards-div").appendChild(img);
-}
-
-let playerCards = [
-  Math.floor(Math.random() * 13),
-  Math.floor(Math.random() * 13),
-];
-let dealerCards = [Math.floor(Math.random() * 13)];
-let gameOver = false;
-let hasStanded = false;
-const messageEl = document.getElementById("message-el");
-const sumEl = document.getElementById("sum-el");
-const cardsEl = document.getElementById("cards-el");
-const dealerCardsEl = document.getElementById("dealer-cards-el");
+let playerCards1 = [];
+let playerCards11 = [];
 const dealerSumEl = document.getElementById("dealer-sum-el");
-const betEl = document.getElementById("bet-el");
-const chipsEl = document.getElementById("chips-el");
-let gameStarted = false;
-let chips = 200;
-let bet = 0;
-
-checkForIllegalValues(playerCards);
-checkForIllegalValues(dealerCards);
-
-function drawNewCard() {
-  if (gameOver || hasStanded) {
-    return;
-  }
-
-  checkForIllegalValues(playerCards);
-  playerCards.push(Math.floor(Math.random() * 13));
-  renderCards();
-  checkForWin(playerCards.reduce((a, b) => a + b));
-}
-
+const playerSumEl = document.getElementById("player-sum-el");
+let playerSum = 0;
+let playerSum11 = 0;
+let gameOver = false;
+let ace = false;
 function startGame() {
-  if (gameStarted) {
-    return;
-  }
-  showDealerCards(cardStack[dealerCards[0]].img, 100);
-  cardStack.splice(dealerCards[0]);
-  showPlayerCards(cardStack[playerCards[0]].img, 100);
-  cardStack.splice(playerCards[0]);
-  showPlayerCards(cardStack[playerCards[1]].img, 100);
-  cardStack.splice(playerCards[1]);
-  renderCards();
-  if (dealerCards.reduce((a, b) => a + b) === 21) {
-    messageEl.textContent = "You lost. Dealer got 21";
-    chips = chips - bet;
-    return;
-  }
-  gameStarted = true;
-  checkForWin(playerCards.reduce((a, b) => a + b));
+  getNewPlayerCard();
 }
 
-function stand() {
-  if (gameOver) {
-    return;
+function getNewPlayerCard() {
+  if (!cardStack[0] || gameOver) return;
+
+  playerCards1.push(cardStack[0]);
+  playerSum = playerCards1.reduce((sum, card) => sum + card.value, 0);
+  playerSum11 = playerSum + 10;
+
+  if (ace || cardStack[0].value === 1) {
+    playerSumEl.textContent = `Sum: ${playerSum}${
+      playerSum11 <= 21 ? `/${playerSum11}` : ""
+    }`;
+    ace = true;
+  } else {
+    playerSumEl.textContent = `Sum: ${playerSum}`;
   }
-  hasStanded = true;
-  checkForDealerWin();
+
+  cardStack.shift();
+  checkForWin();
 }
-function renderCards() {
-  let dealerSum = 0;
-  let playerSum = 0;
-  for (i = 0; i < dealerCards.length; i++) {
-    dealerSum = dealerSum + cardStack[dealerCards[i]].value;
-  }
-  for (i = 0; i < playerCards.length; i++) {
-    playerSum = playerSum + cardStack[playerCards[i]].value;
-  }
 
-  dealerSumEl.textContent = "Dealer sum: " + dealerSum;
-  sumEl.textContent = "Sum: " + playerSum;
-}
-
-async function checkForDealerWin() {
-  if (dealerCards.reduce((a, b) => a + b) < 17) {
-    dealerCards.push(Math.floor(Math.random() * 16) + 2);
-    showDealerCards(cardStack[dealerCards.length].img, 100);
-
-    checkForIllegalValues(dealerCards);
-    renderCards();
-    await new Promise((r) => setTimeout(r, 2000));
-    checkForDealerWin();
-  } else if (dealerCards.reduce((a, b) => a + b) > 17) {
-    console.log("Dealer Cards Sum: " + dealerCards.reduce((a, b) => a + b));
-    console.log("Player Cards Sum: " + playerCards.reduce((a, b) => a + b));
-    if (dealerCards.reduce((a, b) => a + b) > 21) {
-      messageEl.textContent = "Dealer busted";
-      chips = chips + bet;
-    } else if (
-      dealerCards.reduce((a, b) => a + b) > playerCards.reduce((a, b) => a + b)
-    ) {
-      messageEl.textContent = "Dealer Wins";
-      chips = chips - bet;
-    } else if (
-      dealerCards.reduce((a, b) => a + b) < playerCards.reduce((a, b) => a + b)
-    ) {
-      messageEl.textContent = "You win";
-      chips = chips + bet;
-    } else if (
-      dealerCards.reduce((a, b) => a + b) ===
-      playerCards.reduce((a, b) => a + b)
-    ) {
-      messageEl.textContent = "No one wins";
-    } else {
-      messageEl.textContent = "ERROR";
-    }
-    console.log(chips);
-    betEl.textContent = "Current Bet: " + bet;
-    bet = 0;
+function checkForWin() {
+  if (playerSum === 21) {
     gameOver = true;
-    refreshGame();
+  } else if (playerSum > 21) {
+    gameOver = true;
   }
 }
 
-function checkForWin(sum) {
-  if (sum <= 20) {
-    messageEl.textContent = "Do you want to draw a new card?";
-  } else if (sum === 21) {
-    messageEl.textContent = "Youve got Blackjack!";
-    chips = chips + bet + bet;
-    refreshGame();
-  } else if (
-    playerCards.length > 5 &&
-    playerCards.reduce((a, b) => a + b) > 22
-  ) {
-    messageEl.textContent = "You won by the five card rule";
-    refreshGame();
-  } else {
-    messageEl.textContent = "Youre out of the game!";
-    chips = chips - bet;
-    refreshGame();
-  }
+function shuffleCards() {
+  cardStack = cardStack
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
 }
-
-function changeBet() {
-  let newBet = prompt("How much do you want to bet");
-  if (newBet === null) {
-    newBet = 0;
-  }
-  if (newBet > chips) {
-    bet = chips;
-  } else {
-    bet = newBet;
-  }
-  betEl.textContent = "Current Bet: " + bet;
-}
-
-async function refreshGame() {
-  await new Promise((r) => setTimeout(r, 3000));
-  document.getElementById("hide-onclick").style.display = "initial";
-  document.getElementById("hide-onclick2").style.display = "Initial";
-  document.getElementById("dealer-cards-div");
-  document.getElementById("player-cards-div");
-
-  messageEl.textContent = "Want to play a round?";
-  dealerSumEl.textContent = "Dealer sum: ?";
-  sumEl.textContent = "Sum: ?";
-  bet = 0;
-  playerCards = [
-    Math.floor(Math.random() * 13) + 1,
-    Math.floor(Math.random() * 13) + 1,
-  ];
-  dealerCards = [Math.floor(Math.random() * 13) + 1];
-  gameOver = false;
-  hasStanded = false;
-  gameStarted = false;
-  startGame();
-}
-
-function checkForIllegalValues(list) {
-  for (i = 0; i < list.length; i++) {
-    if (list[i] > 11) {
-      list[i] = 10;
-    }
-  }
-}
-
-async function updateBets() {
-  setInterval(() => {
-    chipsEl.textContent = `Chips: ${chips}`;
-    betEl.textContent = "Current Bet: " + bet;
-  }, 1000);
-}
-
-updateBets();
