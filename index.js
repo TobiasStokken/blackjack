@@ -429,7 +429,7 @@ async function restartGame() {
 }
 
 function addBet(amount) {
-  if (amount > stats.chips) return;
+  if (amount > stats.chips || stats.chips === 0) return;
   if (amount === 0) {
     currentBet = stats.chips;
     stats.chips -= stats.chips;
