@@ -56,13 +56,13 @@ ul {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-bottom: 30px;
 }
 
 @keyframes a {
   0% {
     filter: hue-rotate(0deg) brightness(150%) blur(0.3px);
     transform: rotate(0deg) scale(1);
-    border-radius: 50%;
   }
   50% {
     transform: rotate(45deg) scale(1.1);
@@ -70,7 +70,6 @@ ul {
   100% {
     filter: hue-rotate(360deg) brightness(150%) blur(0.3px);
     transform: rotate(90deg) scale(1);
-    border-radius: 50%;
   }
 }
 
