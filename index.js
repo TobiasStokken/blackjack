@@ -247,6 +247,7 @@ if (JSON.parse(window.localStorage.getItem("stats"))) {
 function startGame() {
   gameStarted = true;
   document.getElementById("changeCurrentBet").classList.add("hidden");
+  document.getElementById("bets").classList.add("hidden");
   cardStack = cardStack
     .map((value) => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
@@ -287,11 +288,19 @@ function getNewPlayerCard() {
 
   if (playerSum > 21) {
     messageEl.textContent = "You busted";
+    stats.gamesPlayed++;
+    stats.gamesLost++;
+    currentBet = 0;
     gameOver = true;
     restartGame();
     return;
   } else if (playerSumAce === 21 || playerSumAce === 21) {
     messageEl.textContent = "Player wins with 21";
+    stats.chips = currentBet * 3;
+    currentBet = 0;
+    stats.gamesPlayed++;
+    stats.gamesWon++;
+    renderStats();
     gameOver = true;
     restartGame();
     return;
@@ -418,10 +427,9 @@ function checkForWin() {
 
 async function restartGame() {
   if (gameOver) {
-    console.log("Game over..... restarting");
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < 3; i++) {
       document.getElementById("message2-el").textContent =
-        "New Round in " + (5 - i);
+        "New Round in " + (3 - i);
       await new Promise((r) => setTimeout(r, 1000));
     }
     window.location.reload();
@@ -429,7 +437,7 @@ async function restartGame() {
 }
 
 function addBet(amount) {
-  if (amount > stats.chips || stats.chips === 0) return;
+  if (amount > stats.chips || stats.chips === 0 || gameStarted) return;
   if (amount === 0) {
     currentBet = stats.chips;
     stats.chips -= stats.chips;
@@ -443,6 +451,12 @@ function addBet(amount) {
 function clearBet() {
   stats.chips += currentBet;
   currentBet = 0;
+  renderStats();
+}
+
+function freeChips() {
+  alert("Ad coming soon");
+  stats.chips += 200;
   renderStats();
 }
 

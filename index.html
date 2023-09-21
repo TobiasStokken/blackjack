@@ -9,17 +9,6 @@
   <body>
     <p style="color: darkgreen">Detter er rigget, du vil ikke vinne</p>
     <h1>Blackjack</h1>
-    <p
-      onClick="window.location.reload()"
-      style="
-        font-size: 14px;
-        font-style: italic;
-        color: rgb(123, 161, 58);
-        cursor: pointer;
-      "
-    >
-      Restart?
-    </p>
     <p id="message-el">Want to play a round?</p>
     <p id="message2-el"></p>
     <div id="dealer-cards-div"></div>
@@ -30,9 +19,11 @@
       id="hide-onclick"
       onclick="startGame(); 
       document.getElementById('hide-onclick').style.display = 'none';"
+      style="margin-bottom: 30px"
     >
       START GAME
     </button>
+    <br />
     <button onclick="getNewPlayerCard()">HIT</button>
     <button onclick="stand()">STAND</button>
 
@@ -49,6 +40,19 @@
             style="
               position: absolute;
               bottom: 0;
+              left: 0;
+              color: goldenrod;
+              cursor: pointer;
+              text-decoration: underline;
+            "
+            onclick="freeChips()"
+          >
+            +200
+          </li>
+          <li
+            style="
+              position: absolute;
+              bottom: 0;
               right: 0;
               color: goldenrod;
               cursor: pointer;
@@ -61,66 +65,71 @@
         </ul>
       </div>
     </div>
-    <p>
-      Current bet: $<span id="currentBet">0</span
-      ><span id="changeCurrentBet">
-        (<a
-          onclick="clearBet()"
-          style="color: goldenrod; cursor: pointer; text-decoration: underline"
-          >clear</a
-        >)
-      </span>
-    </p>
-    <div class="bets">
-      <div onclick="addBet(50)">
-        <p>$50</p>
-        <img
-          src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
-          width="100px"
-          style="filter: grayscale() invert() brightness(120%)"
-        />
-      </div>
-      <div onclick="addBet(100)">
-        <p>$100</p>
-        <img
-          src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
-          width="100px"
-        />
-      </div>
-      <div onclick="addBet(200)">
-        <p>$200</p>
-        <img
-          src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
-          width="100px"
-          style="filter: hue-rotate(230deg)"
-        />
-      </div>
-      <div onclick="addBet(500)">
-        <p>$500</p>
-        <img
-          src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
-          width="100px"
-          style="filter: hue-rotate(150deg)"
-        />
-      </div>
-      <div onclick="addBet(1000)">
-        <p>$1000</p>
-        <img
-          src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
-          width="100px"
-          style="filter: grayscale()"
-        />
-      </div>
-      <div onclick="addBet(0)">
-        <p>ALL IN</p>
-        <img
-          src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
-          width="100px"
-          class="allIn"
-        />
+    <div id="bets">
+      <p>
+        Current bet: $<span id="currentBet">0</span
+        ><span id="changeCurrentBet">
+          (<a
+            onclick="clearBet()"
+            style="
+              color: goldenrod;
+              cursor: pointer;
+              text-decoration: underline;
+            "
+            >clear</a
+          >)
+        </span>
+      </p>
+      <div class="bets">
+        <div onclick="addBet(50)">
+          <p>$50</p>
+          <img
+            src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
+            width="100px"
+            style="filter: grayscale() invert() brightness(120%)"
+          />
+        </div>
+        <div onclick="addBet(100)">
+          <p>$100</p>
+          <img
+            src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
+            width="100px"
+          />
+        </div>
+        <div onclick="addBet(200)">
+          <p>$200</p>
+          <img
+            src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
+            width="100px"
+            style="filter: hue-rotate(230deg)"
+          />
+        </div>
+        <div onclick="addBet(500)">
+          <p>$500</p>
+          <img
+            src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
+            width="100px"
+            style="filter: hue-rotate(150deg)"
+          />
+        </div>
+        <div onclick="addBet(1000)">
+          <p>$1000</p>
+          <img
+            src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
+            width="100px"
+            style="filter: grayscale()"
+          />
+        </div>
+        <div onclick="addBet(0)">
+          <p>ALL IN</p>
+          <img
+            src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
+            width="100px"
+            class="allIn"
+          />
+        </div>
       </div>
     </div>
-
     <script src="index.js"></script>
   </body>
 </html>
