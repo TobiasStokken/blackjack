@@ -16,8 +16,6 @@ h1 {
   font-style: italic;
 }
 
-/* 3. Make sure that the two buttons have some space between
-each other when they are rendered out vertically */
 button {
   color: #016f32;
   width: 150px;
@@ -27,4 +25,58 @@ button {
   font-weight: bold;
   border: none;
   border-radius: 2px;
+}
+
+.statscontainer {
+  text-align: left;
+  border-width: 2px;
+  border-color: goldenrod;
+  border-style: solid;
+  padding: 16px;
+  padding-top: 0px;
+  width: fit-content;
+  position: absolute;
+  right: 3vw;
+  top: 3vw;
+}
+
+ul li {
+  list-style: none;
+}
+
+ul {
+  padding-left: 0;
+}
+
+.bets {
+  width: 99%;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+@keyframes a {
+  0% {
+    filter: hue-rotate(0deg) brightness(150%) blur(0.3px);
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(45deg) scale(1.1);
+  }
+  100% {
+    filter: hue-rotate(360deg) brightness(150%) blur(0.3px);
+    transform: rotate(90deg) scale(1);
+  }
+}
+
+.allIn {
+  min-height: 100%;
+  animation: a 0.5s linear infinite;
+}
+
+.hidden {
+  display: none;
 }
