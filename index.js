@@ -227,6 +227,7 @@ let dealerSumAce = 0;
 let playerSum = 0;
 let playerSumAce = 0;
 let gameOver = false;
+let gameStarted = false;
 let dealerAce = false;
 let playerAce = false;
 let usePlayerSumAce = false;
@@ -244,6 +245,7 @@ if (JSON.parse(window.localStorage.getItem("stats"))) {
 }
 
 function startGame() {
+  gameStarted = true;
   document.getElementById("changeCurrentBet").classList.add("hidden");
   cardStack = cardStack
     .map((value) => ({ value, sort: Math.random() }))
@@ -264,7 +266,7 @@ function loadCard(image, appendTo) {
 }
 
 function getNewPlayerCard() {
-  if (!cardStack[0] || gameOver) return;
+  if (!cardStack[0] || gameOver || !gameStarted) return;
 
   playerCards.push(cardStack[0]);
   playerSum = playerCards.reduce((sum, card) => sum + card.value, 0);
@@ -339,7 +341,7 @@ function getNewDealerCard() {
   checkForWin();
 }
 async function stand() {
-  if (!cardStack[0] || gameOver) return;
+  if (!cardStack[0] || gameOver || !gameStarted) return;
   // draws a new card until dealer has 17 or above
   if (dealerSum >= 17 || (dealerSumAce >= 17 && useDealerSumAce)) {
     gameOver = true;
