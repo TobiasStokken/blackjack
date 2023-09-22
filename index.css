@@ -17,7 +17,7 @@ body {
   position: absolute;
   width: 110%;
   height: 250%;
-  background-image: url("images/table2.png");
+  background-image: url("images/table.png");
   background-size: cover;
   filter: blur(10px);
   z-index: -1;
@@ -117,11 +117,12 @@ button:active {
 }
 
 .card {
+  margin: 0px 5px 0px 5px;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 750px) {
   body {
     overflow: auto;
     padding-left: 30px;
