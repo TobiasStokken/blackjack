@@ -460,6 +460,11 @@ function freeChips() {
   renderStats();
 }
 
+addEventListener("beforeunload", () => {
+  stats.chips += currentBet;
+  renderStats();
+});
+
 function renderStats() {
   window.localStorage.setItem("stats", JSON.stringify(stats));
   document.getElementById("statsChips").textContent = stats.chips;
