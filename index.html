@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3586335318722053"
+      crossorigin="anonymous"
+    ></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="index.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
+    />
     <title>Blackjack</title>
   </head>
   <body>
-    <p style="color: darkgreen">Detter er rigget, du vil ikke vinne</p>
     <h1>Blackjack</h1>
     <p id="message-el">Want to play a round?</p>
     <p id="message2-el"></p>
@@ -48,7 +57,7 @@
             "
             onclick="freeChips()"
           >
-            +200
+            +200 Chips
           </li>
           <li
             style="
@@ -60,7 +69,7 @@
               text-decoration: underline;
               user-select: none;
             "
-            ondblclick="window.localStorage.clear();window.location.reload()"
+            ondblclick="window.localStorage.clear(); stats = undefined; window.location.reload()"
           >
             Reset?
           </li>

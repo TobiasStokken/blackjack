@@ -368,7 +368,11 @@ function checkForWin() {
   stats.gamesPlayed++;
   renderStats();
 
-  if (usePlayerSumAce) {
+  if (playerSumAce === 21 || playerSum === 21) {
+    messageEl.textContent = "You win with 21";
+    stats.chips += currentBet * 2;
+    stats.gamesWon;
+  } else if (usePlayerSumAce) {
     if (useDealerSumAce) {
       if (playerSumAce > dealerSumAce) {
         messageEl.textContent = "You win";
