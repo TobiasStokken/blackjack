@@ -259,7 +259,8 @@ function startGame() {
 }
 function loadCard(image, appendTo) {
   // Create card image element
-  var elem = document.createElement("img");
+  const elem = document.createElement("img");
+  elem.classList.add("card");
   elem.setAttribute("src", image);
   elem.setAttribute("width", "128");
   elem.setAttribute("alt", "Image not found");
