@@ -56,86 +56,97 @@
           >
         </p>
       </div>
-
-      <div class="bets" id="bets">
-        <div class="glass game bets2">
-          <div onclick="addBet(50)">
+      <div
+        class="glass"
+        style="margin-top: 50px; display: inline-block; max-width: 800px"
+      >
+        <p>Current bet:</p>
+        <div style="min-height: 150px" id="dropChips"></div>
+      </div>
+      <div
+        class="bets glass"
+        style="margin-top: 50px; padding-top: 20px"
+        id="bets"
+      >
+        <p>Chips: <span id="statsChips">?</span></p>
+        <div style="user-select: none" class="bets2">
+          <div onclick="dragChips(50, true)" ondragend="dragChips(50, false)">
             <p>$50</p>
             <img
-              src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
-              width="100px"
-              height="100px"
-              style="
-                filter: grayscale() invert() brightness(120%);
-                cursor: pointer;
-              "
-              class="chipsHoverEffect"
-              alt="50ChipsImage"
-            />
-          </div>
-          <div onclick="addBet(100)">
-            <p>$100</p>
-            <img
-              src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
+              src="images/chips/50.png"
               width="100px"
               height="100px"
               style="cursor: pointer"
-              class="chipsHoverEffect"
+              class="chips"
+              alt="50ChipsImage"
+              id="chips50"
+            />
+          </div>
+          <div onclick="dragChips(100, true)" ondragend="dragChips(100, false)">
+            <p>$100</p>
+            <img
+              src="images/chips/100.png"
+              width="100px"
+              height="100px"
+              style="cursor: pointer"
+              class="chips"
               alt="100ChipsImage"
             />
           </div>
-          <div onclick="addBet(200)">
+          <div onclick="dragChips(200, true)" ondragend="dragChips(200, false)">
             <p>$200</p>
             <img
-              src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
-              width="100px"
-              height="100px"
-              style="filter: hue-rotate(230deg); cursor: pointer"
-              class="chipsHoverEffect"
-              alt="200ChipsImage"
-            />
-          </div>
-          <div onclick="addBet(500)">
-            <p>$500</p>
-            <img
-              src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
-              width="100px"
-              height="100px"
-              style="filter: hue-rotate(150deg); cursor: pointer"
-              class="chipsHoverEffect"
-              alt="500ChipsImage"
-            />
-          </div>
-          <div onclick="addBet(1000)">
-            <p>$1000</p>
-            <img
-              src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
-              width="100px"
-              height="100px"
-              style="filter: grayscale(); cursor: pointer"
-              class="chipsHoverEffect"
-              alt="1000ChipsImage"
-            />
-          </div>
-          <div onclick="addBet(0)">
-            <p>ALL IN</p>
-            <img
-              src="https://png.pngtree.com/png-vector/20220729/ourmid/pngtree-poker-chip-png-image_6091092.png"
+              src="images/chips/200.png"
               width="100px"
               height="100px"
               style="cursor: pointer"
-              class="allIn"
-              class="chipsHoverEffectAllIn"
+              class="chips"
+              alt="200ChipsImage"
+            />
+          </div>
+          <div onclick="dragChips(500, true)" ondragend="dragChips(500, false)">
+            <p>$500</p>
+            <img
+              src="images/chips/500.png"
+              width="100px"
+              height="100px"
+              style="cursor: pointer"
+              class="chips"
+              alt="500ChipsImage"
+            />
+          </div>
+          <div
+            onclick="dragChips(1000, true)"
+            ondragend="dragChips(1000, false)"
+          >
+            <p>$1000</p>
+            <img
+              src="images/chips/1000.png"
+              width="100px"
+              height="100px"
+              style="cursor: pointer"
+              class="chips"
+              alt="1000ChipsImage"
+            />
+          </div>
+          <div onclick="dragChips(0, true)" ondragend="dragChips(0, false)">
+            <p>ALL IN</p>
+            <img
+              src="images/chips/all.png"
+              width="100px"
+              height="100px"
+              style="cursor: pointer"
+              class="chips"
               alt="AllInChipsImage"
             />
           </div>
         </div>
       </div>
-      <div class="statscontainer glass game">
+      <div class="statscontainer glass game" style="margin-top: 50px">
         <div class="stats">
           <h1>Stats:</h1>
           <ul>
-            <li>Chips: <span id="statsChips">?</span></li>
+            <li>Chips: <span id="statsChips2">?</span></li>
             <li>Games Played: <span id="statsGamesPlayed">?</span></li>
             <li>Games Won: <span id="statsGamesWon">?</span></li>
             <li>Games Lost: <span id="statsGamesLost">?</span></li>

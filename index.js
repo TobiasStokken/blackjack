@@ -1,5 +1,6 @@
 const dealerSumEl = document.getElementById("dealer-sum-el");
 const playerSumEl = document.getElementById("player-sum-el");
+let table = document.getElementById("dropChips");
 const messageEl = document.getElementById("message-el");
 const dealerCardsEl = "dealer-cards-div";
 const playerCardsEl = "player-cards-div";
@@ -289,20 +290,21 @@ function getNewPlayerCard() {
 
   if (playerSum > 21) {
     messageEl.textContent = "You busted";
+
     stats.gamesPlayed++;
     stats.gamesLost++;
     currentBet = 0;
     gameOver = true;
     restartGame();
     return;
-  } else if (playerSumAce === 21 || playerSumAce === 21) {
+  } else if (playerSum === 21 || playerSumAce === 21) {
     messageEl.textContent = "Player wins with 21";
-    stats.chips = currentBet * 3;
+    stats.chips += currentBet * 3;
     currentBet = 0;
     stats.gamesPlayed++;
     stats.gamesWon++;
-    renderStats();
     gameOver = true;
+    renderStats();
     restartGame();
     return;
   }
@@ -331,6 +333,7 @@ function getNewDealerCard() {
   if (dealerSum > 21) {
     messageEl.textContent = "Dealer Busted";
     stats.chips += currentBet * 2;
+
     currentBet = 0;
     stats.gamesPlayed++;
     stats.gamesWon++;
@@ -340,6 +343,7 @@ function getNewDealerCard() {
     return;
   } else if (dealerSumAce === 21 || dealerSum === 21) {
     messageEl.textContent = "Dealer wins with 21";
+
     stats.gamesPlayed++;
     stats.gamesLost++;
     renderStats();
@@ -372,29 +376,36 @@ function checkForWin() {
   if (playerSumAce === 21 || playerSum === 21) {
     messageEl.textContent = "You win with 21";
     stats.chips += currentBet * 2;
+
     stats.gamesWon;
   } else if (usePlayerSumAce) {
     if (useDealerSumAce) {
       if (playerSumAce > dealerSumAce) {
         messageEl.textContent = "You win";
         stats.chips += currentBet * 2;
+
         stats.gamesWon++;
       } else if (dealerSumAce > playerSumAce) {
         messageEl.textContent = "Dealer wins";
+
         stats.gamesLost++;
       } else {
         messageEl.textContent = "No one wins";
+        stats.chips += currentBet;
       }
     } else if (!useDealerSumAce) {
       if (playerSumAce > dealerSum) {
         messageEl.textContent = "You win";
         stats.chips += currentBet * 2;
+
         stats.gamesWon++;
       } else if (dealerSum > playerSumAce) {
         messageEl.textContent = "Dealer wins";
+
         stats.gamesLost++;
       } else {
         messageEl.textContent = "No one wins";
+        stats.chips += currentBet;
         stats.gamesDrawn++;
       }
     }
@@ -403,12 +414,15 @@ function checkForWin() {
       if (playerSum > dealerSumAce) {
         messageEl.textContent = "You win";
         stats.chips += currentBet * 2;
+
         stats.gamesWon++;
       } else if (dealerSumAce > playerSum) {
         messageEl.textContent = "Dealer wins";
+
         stats.gamesLost++;
       } else {
         messageEl.textContent = "No one wins";
+        stats.chips += currentBet;
         stats.gamesDrawn++;
       }
     } else if (!useDealerSumAce) {
@@ -421,6 +435,7 @@ function checkForWin() {
         stats.gamesLost++;
       } else {
         messageEl.textContent = "No one wins";
+        stats.chips += currentBet;
         stats.gamesDrawn++;
       }
     }
@@ -454,7 +469,9 @@ function addBet(amount) {
 }
 
 function clearBet() {
+  table.innerText = "";
   stats.chips += currentBet;
+
   currentBet = 0;
   renderStats();
 }
@@ -473,6 +490,7 @@ addEventListener("beforeunload", () => {
 function renderStats() {
   window.localStorage.setItem("stats", JSON.stringify(stats));
   document.getElementById("statsChips").textContent = stats.chips;
+  document.getElementById("statsChips2").textContent = stats.chips;
   document.getElementById("statsGamesPlayed").textContent = stats.gamesPlayed;
   document.getElementById("statsGamesWon").textContent = stats.gamesWon;
   document.getElementById("statsGamesLost").textContent = stats.gamesLost;
@@ -480,3 +498,50 @@ function renderStats() {
   document.getElementById("currentBet").textContent = currentBet;
 }
 renderStats();
+
+setInterval(() => {
+  renderStats();
+}, 1000);
+
+function dragChips(amount, hasClicked) {
+  if (stats.chips < amount || stats.chips === 0) return;
+  table = document.getElementById("dropChips");
+
+  if (
+    document.elementFromPoint(event.clientX, event.clientY).id ===
+      "dropChips" ||
+    hasClicked
+  ) {
+    addBet(amount);
+    const element = document.createElement("img");
+    if (amount === 50) {
+      element.src = "images/chips/50.png";
+    } else if (amount === 100) {
+      element.src = "images/chips/100.png";
+    } else if (amount === 200) {
+      element.src = "images/chips/200.png";
+    } else if (amount === 500) {
+      element.src = "images/chips/500.png";
+    } else if (amount === 1000) {
+      element.src = "images/chips/1000.png";
+    } else if (amount === 0) {
+      element.src = "images/chips/all.png";
+    }
+    element.style.width = "100px";
+    element.setAttribute("id", "addedChips" + amount);
+    element.style.cursor = "pointer";
+    element.onclick = () => {
+      if (gameStarted) return;
+      document.getElementById("addedChips" + amount).remove();
+      if (amount === 0) {
+        stats.chips = currentBet;
+        currentBet = 0;
+      } else {
+        stats.chips += amount;
+        currentBet -= amount;
+      }
+      renderStats();
+    };
+    table.appendChild(element);
+  }
+}
