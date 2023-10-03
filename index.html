@@ -20,169 +20,175 @@
   <body>
     <div class="gameArea">
       <div class="background"></div>
-      <div class="glass game">
-        <h1>Blackjack</h1>
-        <p id="message-el">Want to play a round?</p>
-        <p id="message2-el"></p>
-        <div id="dealer-cards-div"></div>
-        <p id="dealer-sum-el">Dealer sum: ?</p>
-        <p id="player-sum-el">Sum: ?</p>
-        <div id="player-cards-div"></div>
-        <button
-          id="hide-onclick"
-          onclick="startGame(); 
-      document.getElementById('hide-onclick').style.display = 'none';"
-          style="margin-bottom: 30px; scale: 2; margin-top: 15px"
-        >
-          START GAME
-        </button>
-        <br />
-        <button onclick="getNewPlayerCard()" class="hitButton">HIT</button>
-        <button onclick="stand()">STAND</button>
-
-        <p>
-          Current bet:
-          <span id="currentBet">0</span
-          ><span
-            onclick="clearBet()"
-            style="
-              color: goldenrod;
-              cursor: pointer;
-              text-decoration: underline;
-            "
-            id="changeCurrentBet"
+      <div class="centerCollumn">
+        <div class="glass">
+          <h1>Blackjack</h1>
+          <p id="message-el">Want to play a round?</p>
+          <p id="message2-el"></p>
+          <div id="dealer-cards-div"></div>
+          <p id="dealer-sum-el">Dealer sum: ?</p>
+          <p id="player-sum-el">Sum: ?</p>
+          <div id="player-cards-div"></div>
+          <button
+            id="hide-onclick"
+            onclick="startGame(); 
+            document.getElementById('hide-onclick').style.display = 'none';"
+            style="margin-bottom: 30px; scale: 2; margin-top: 15px"
           >
-            clear</span
-          >
-        </p>
-      </div>
-      <div
-        class="glass"
-        style="margin-top: 50px; display: inline-block; max-width: 800px"
-      >
-        <p>Current bet:</p>
-        <div style="min-height: 150px" id="dropChips"></div>
-      </div>
-      <div
-        class="bets glass"
-        style="margin-top: 50px; padding-top: 20px"
-        id="bets"
-      >
-        <p>Chips: <span id="statsChips">?</span></p>
-        <div style="user-select: none" class="bets2">
-          <div onclick="dragChips(50, true)" ondragend="dragChips(50, false)">
-            <p>$50</p>
-            <img
-              src="images/chips/50.png"
-              width="100px"
-              height="100px"
-              style="cursor: pointer"
-              class="chips"
-              alt="50ChipsImage"
-              id="chips50"
-            />
+            START GAME
+          </button>
+          <br />
+          <button onclick="getNewPlayerCard()" class="hitButton">HIT</button>
+          <button onclick="stand()">STAND</button>
+          <p>
+            Current bet:
+            <span id="currentBet">0</span>
+            <span
+              onclick="clearBet()"
+              style="
+                color: goldenrod;
+                cursor: pointer;
+                text-decoration: underline;
+              "
+              id="changeCurrentBet"
+              >clear</span
+            >
+          </p>
+        </div>
+        <div class="glass">
+          <p>Current bet:</p>
+          <div style="min-height: 150px" id="dropChips"></div>
+        </div>
+        <div class="glass" id="bets">
+          <h2>You have <span id="statsChips">?</span> chips.</h2>
+          <div class="chipsHelp">
+            <p class="chipsHelpText">
+              Drag the chips you want to bet into the current bet box to start.
+            </p>
           </div>
-          <div onclick="dragChips(100, true)" ondragend="dragChips(100, false)">
-            <p>$100</p>
-            <img
-              src="images/chips/100.png"
-              width="100px"
-              height="100px"
-              style="cursor: pointer"
-              class="chips"
-              alt="100ChipsImage"
-            />
-          </div>
-          <div onclick="dragChips(200, true)" ondragend="dragChips(200, false)">
-            <p>$200</p>
-            <img
-              src="images/chips/200.png"
-              width="100px"
-              height="100px"
-              style="cursor: pointer"
-              class="chips"
-              alt="200ChipsImage"
-            />
-          </div>
-          <div onclick="dragChips(500, true)" ondragend="dragChips(500, false)">
-            <p>$500</p>
-            <img
-              src="images/chips/500.png"
-              width="100px"
-              height="100px"
-              style="cursor: pointer"
-              class="chips"
-              alt="500ChipsImage"
-            />
-          </div>
-          <div
-            onclick="dragChips(1000, true)"
-            ondragend="dragChips(1000, false)"
-          >
-            <p>$1000</p>
-            <img
-              src="images/chips/1000.png"
-              width="100px"
-              height="100px"
-              style="cursor: pointer"
-              class="chips"
-              alt="1000ChipsImage"
-            />
-          </div>
-          <div onclick="dragChips(0, true)" ondragend="dragChips(0, false)">
-            <p>ALL IN</p>
-            <img
-              src="images/chips/all.png"
-              width="100px"
-              height="100px"
-              style="cursor: pointer"
-              class="chips"
-              alt="AllInChipsImage"
-            />
+          <div style="user-select: none" class="bets2">
+            <div onclick="dragChips(50, true)" ondragend="dragChips(50, false)">
+              <p>$50</p>
+              <img
+                src="images/chips/50.png"
+                width="80px"
+                height="80px"
+                style="cursor: pointer"
+                class="chips"
+                alt="50ChipsImage"
+                id="chips50"
+              />
+            </div>
+            <div
+              onclick="dragChips(100, true)"
+              ondragend="dragChips(100, false)"
+            >
+              <p>$100</p>
+              <img
+                src="images/chips/100.png"
+                width="80px"
+                height="80px"
+                style="cursor: pointer"
+                class="chips"
+                alt="100ChipsImage"
+              />
+            </div>
+            <div
+              onclick="dragChips(200, true)"
+              ondragend="dragChips(200, false)"
+            >
+              <p>$200</p>
+              <img
+                src="images/chips/200.png"
+                width="80px"
+                height="80px"
+                style="cursor: pointer"
+                class="chips"
+                alt="200ChipsImage"
+              />
+            </div>
+            <div
+              onclick="dragChips(500, true)"
+              ondragend="dragChips(500, false)"
+            >
+              <p>$500</p>
+              <img
+                src="images/chips/500.png"
+                width="80px"
+                height="80px"
+                style="cursor: pointer"
+                class="chips"
+                alt="500ChipsImage"
+              />
+            </div>
+            <div
+              onclick="dragChips(1000, true)"
+              ondragend="dragChips(1000, false)"
+            >
+              <p>$1000</p>
+              <img
+                src="images/chips/1000.png"
+                width="80px"
+                height="80px"
+                style="cursor: pointer"
+                class="chips"
+                alt="1000ChipsImage"
+              />
+            </div>
+            <div onclick="dragChips(0, true)" ondragend="dragChips(0, false)">
+              <p>ALL IN</p>
+              <img
+                src="images/chips/all.png"
+                width="80px"
+                height="80px"
+                style="cursor: pointer"
+                class="chips"
+                alt="AllInChipsImage"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="statscontainer glass game" style="margin-top: 50px">
-        <div class="stats">
-          <h1>Stats:</h1>
-          <ul>
-            <li>Chips: <span id="statsChips2">?</span></li>
-            <li>Games Played: <span id="statsGamesPlayed">?</span></li>
-            <li>Games Won: <span id="statsGamesWon">?</span></li>
-            <li>Games Lost: <span id="statsGamesLost">?</span></li>
-            <li>Games Drawn: <span id="statsGamesDrawn">?</span></li>
-            <div
-              style="
-                display: flex;
-                flex-direction: row;
-                gap: 15px;
-                margin-top: 20px;
-              "
-            >
-              <li
-                style="
-                  color: goldenrod;
-                  cursor: pointer;
-                  text-decoration: underline;
-                  user-select: none;
-                "
-                onclick="freeChips()"
+        <div class="glass" style="justify-content: center; display: flex">
+          <div class="stats">
+            <h1>Stats:</h1>
+            <ul>
+              <div
+                class="stat"
+                style="border-bottom: 1px solid rgba(0, 0, 0, 0.175)"
               >
-                +200 Chips
-              </li>
-              <li
-                style="
-                  color: goldenrod;
-                  cursor: pointer;
-                  text-decoration: underline;
-                  user-select: none;
-                "
-                ondblclick="window.localStorage.clear(); stats = undefined; window.location.reload()"
+                Chips: <span id="statsChips2">?</span>
+              </div>
+              <div
+                class="stat"
+                style="border-bottom: 1px solid rgba(0, 0, 0, 0.175)"
               >
-                Reset?
-              </li>
-            </div>
-          </ul>
+                Games Played: <span id="statsGamesPlayed">?</span>
+              </div>
+              <div
+                class="stat"
+                style="border-bottom: 1px solid rgba(0, 0, 0, 0.175)"
+              >
+                Games Won: <span id="statsGamesWon">?</span>
+              </div>
+              <div
+                class="stat"
+                style="border-bottom: 1px solid rgba(0, 0, 0, 0.175)"
+              >
+                Games Lost: <span id="statsGamesLost">?</span>
+              </div>
+              <div class="stat">
+                Games Drawn: <span id="statsGamesDrawn">?</span>
+              </div>
+              <div class="statButtons">
+                <button onclick="freeChips()">+200 Chips</button>
+                <button
+                  ondblclick="window.localStorage.clear(); stats = undefined; window.location.reload()"
+                >
+                  Reset?
+                </button>
+              </div>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
