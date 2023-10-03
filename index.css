@@ -4,12 +4,13 @@ body {
   font-weight: bold;
   color: white;
   text-align: center;
-  background-color: rgb(15, 59, 30);
+  background-color: rgb(16, 82, 12);
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-bottom: 100px;
 }
 body::-webkit-scrollbar {
   display: none;
@@ -17,20 +18,20 @@ body::-webkit-scrollbar {
 
 .background {
   position: absolute;
+  background-attachment: fixed;
   width: 100%;
-  height: 250%;
+  height: 140%;
   background-image: url("images/table.png");
   background-size: cover;
-  filter: blur(10px);
+  mix-blend-mode: hard-light;
+  filter: blur(6px);
   z-index: -1;
-  bottom: -10px;
-  left: -10px;
+  opacity: 0.4;
 }
 .gameArea {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-bottom: 150px;
 }
 .centerCollumn {
   width: 700px;
@@ -71,8 +72,19 @@ body::-webkit-scrollbar {
   flex-direction: row;
   justify-content: center;
   gap: 20px;
+  flex-wrap: wrap;
+  padding: 60px;
+  padding-bottom: 0;
+  padding-top: 0;
 }
-
+.chipsHelp {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.chipsHelpText {
+  width: 50%;
+}
 h1 {
   color: goldenrod;
 }
@@ -130,27 +142,34 @@ button:active {
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
-@media screen and (max-width: 1450px) {
-  body {
-    overflow: auto;
-    padding-left: 30px;
-  }
-  .statscontainer {
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
-  .bets {
-    flex-wrap: wrap;
+@media screen and (max-width: 800px) {
+  .centerCollumn {
+    width: 500px;
   }
   .bets2 {
-    flex-wrap: wrap;
-  }
-  .hitButton {
-    margin-bottom: 5px;
+    padding: 80px;
+    padding-bottom: 0;
+    padding-top: 0;
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 550px) {
+  .centerCollumn {
+    width: 400px;
+  }
+  .bets2 {
+    padding: 60px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .centerCollumn {
+    width: 350px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .centerCollumn {
+    width: 300px;
+  }
 }
 
 .hitButton {

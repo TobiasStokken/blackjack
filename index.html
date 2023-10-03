@@ -61,9 +61,11 @@
         </div>
         <div class="glass" id="bets">
           <h2>You have <span id="statsChips">?</span> chips.</h2>
-          <p>
-            Drag the chips you want to bet into the current bet box to start.
-          </p>
+          <div class="chipsHelp">
+            <p class="chipsHelpText">
+              Drag the chips you want to bet into the current bet box to start.
+            </p>
+          </div>
           <div style="user-select: none" class="bets2">
             <div onclick="dragChips(50, true)" ondragend="dragChips(50, false)">
               <p>$50</p>
