@@ -182,3 +182,7 @@ button:active {
   padding-bottom: 20px;
   padding-top: 0px;
 }
+
+.hidden {
+  display: none;
+}
