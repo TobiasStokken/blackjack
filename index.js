@@ -7,10 +7,10 @@ const clearSFX = new Audio("./audio/clear.mp3"),
 
 const dealerSumEl = document.getElementById("dealer-sum-el");
 const playerSumEl = document.getElementById("player-sum-el");
-const table = document.getElementById("dropChips");
 const messageEl = document.getElementById("message-el");
 const dealerCardsEl = "dealer-cards-div";
 const playerCardsEl = "player-cards-div";
+let table = document.getElementById("dropChips");
 // https://www.improvemagic.com/all-playing-cards-names-with-pictures/
 let cardStack = [
   // Hearts =>
