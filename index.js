@@ -554,7 +554,7 @@ function dragChips(amount, hasClicked) {
     element.setAttribute("id", "addedChips" + amount);
     element.style.cursor = "pointer";
     element.onclick = () => {
-      clearSFX.play();
+      playDropSFX();
       if (gameStarted) return;
       document.getElementById("addedChips" + amount).remove();
       if (amount === 0) {
