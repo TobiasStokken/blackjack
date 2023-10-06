@@ -247,6 +247,9 @@ if (JSON.parse(window.localStorage.getItem("stats"))) {
 
 function startGame() {
   gameStarted = true;
+  if (!currentBet) {
+    document.getElementById("currentBetChips").classList.add("hidden");
+  }
   document.getElementById("changeCurrentBet").classList.add("hidden");
   document.getElementById("bets").classList.add("hidden");
   cardStack = cardStack
