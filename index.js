@@ -1,13 +1,13 @@
-const clearSFX = new Audio("./audio/clear.mp3");
-const drop1SFX = new Audio("./audio/drop1.mp3");
-const drop2SFX = new Audio("./audio/drop2.mp3");
-const drop3SFX = new Audio("./audio/drop3.mp3");
-const drop4SFX = new Audio("./audio/drop4.mp3");
-const drop5SFX = new Audio("./audio/drop5.mp3");
+const clearSFX = new Audio("./audio/clear.mp3"),
+  drop1SFX = new Audio("./audio/drop1.mp3"),
+  drop2SFX = new Audio("./audio/drop2.mp3"),
+  drop3SFX = new Audio("./audio/drop3.mp3"),
+  drop4SFX = new Audio("./audio/drop4.mp3"),
+  drop5SFX = new Audio("./audio/drop5.mp3");
 
 const dealerSumEl = document.getElementById("dealer-sum-el");
 const playerSumEl = document.getElementById("player-sum-el");
-let table = document.getElementById("dropChips");
+const table = document.getElementById("dropChips");
 const messageEl = document.getElementById("message-el");
 const dealerCardsEl = "dealer-cards-div";
 const playerCardsEl = "player-cards-div";
@@ -226,21 +226,21 @@ let cardStack = [
     img: "https://www.improvemagic.com/wp-content/uploads/2020/11/lk.png",
   },
 ];
-let playerCards = [];
-let playerCards11 = [];
-let dealerCards = [];
-let dealerCards11 = [];
-let dealerSum = 0;
-let dealerSumAce = 0;
-let playerSum = 0;
-let playerSumAce = 0;
-let gameOver = false;
-let gameStarted = false;
-let dealerAce = false;
-let playerAce = false;
-let usePlayerSumAce = false;
-let useDealerSumAce = false;
-let currentBet = 0;
+let playerCards = [],
+  playerCards11 = [],
+  dealerCards = [],
+  dealerCards11 = [];
+let dealerSum = 0,
+  dealerSumAce = 0,
+  playerSum = 0,
+  playerSumAce = 0,
+  currentBet = 0;
+let gameOver = false,
+  gameStarted = false,
+  dealerAce = false,
+  playerAce = false,
+  usePlayerSumAce = false,
+  useDealerSumAce = false;
 let stats = {
   chips: 200,
   gamesPlayed: 0,
