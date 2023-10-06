@@ -16,7 +16,7 @@ let cardStack = [
   // Hearts =>
   {
     value: 1,
-    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/s1.png",
+    img: "https://www.improvemagic.com/wp-content/uploads/2020/11/sa.png",
   },
   {
     value: 2,
