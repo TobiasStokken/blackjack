@@ -1,3 +1,10 @@
+const clearSFX = new Audio("./audio/clear.mp3");
+const drop1SFX = new Audio("./audio/drop1.mp3");
+const drop2SFX = new Audio("./audio/drop2.mp3");
+const drop3SFX = new Audio("./audio/drop3.mp3");
+const drop4SFX = new Audio("./audio/drop4.mp3");
+const drop5SFX = new Audio("./audio/drop5.mp3");
+
 const dealerSumEl = document.getElementById("dealer-sum-el");
 const playerSumEl = document.getElementById("player-sum-el");
 let table = document.getElementById("dropChips");
@@ -478,6 +485,7 @@ function clearBet() {
 
   currentBet = 0;
   renderStats();
+  clearSFX.play();
 }
 
 function freeChips() {
@@ -507,9 +515,26 @@ setInterval(() => {
   renderStats();
 }, 1000);
 
+function playDropSFX() {
+  let rand2 = Math.floor(Math.random() * 100 + 1);
+  let rand = Math.floor(Math.random() * 4 + 1);
+  if (rand === 1 && rand2 != 50) {
+    drop1SFX.play();
+  } else if (rand === 2 && rand2 != 50) {
+    drop2SFX.play();
+  } else if (rand === 3 && rand2 != 50) {
+    drop3SFX.play();
+  } else if (rand === 4 && rand2 != 50) {
+    drop4SFX.play();
+  } else {
+    drop5SFX.play();
+  }
+}
+
 function dragChips(amount, hasClicked) {
   if (stats.chips < amount || stats.chips === 0) return;
   table = document.getElementById("dropChips");
+  playDropSFX();
 
   if (
     document.elementFromPoint(event.clientX, event.clientY).id ===
@@ -535,6 +560,7 @@ function dragChips(amount, hasClicked) {
     element.setAttribute("id", "addedChips" + amount);
     element.style.cursor = "pointer";
     element.onclick = () => {
+      playDropSFX();
       if (gameStarted) return;
       document.getElementById("addedChips" + amount).remove();
       if (amount === 0) {
