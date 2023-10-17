@@ -481,7 +481,6 @@ function addBet(amount) {
 function clearBet() {
   table.innerText = "";
   stats.chips += currentBet;
-
   currentBet = 0;
   renderStats();
   clearSFX.play();
@@ -489,13 +488,13 @@ function clearBet() {
 
 function freeChips() {
   alert("Ad coming soon");
+  clearBet();
   stats.chips += 200;
   renderStats();
 }
 
 addEventListener("beforeunload", () => {
   clearBet();
-  renderStats();
 });
 
 function renderStats() {
