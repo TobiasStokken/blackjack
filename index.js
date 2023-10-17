@@ -2,8 +2,7 @@ const clearSFX = new Audio("./audio/clear.mp3"),
   drop1SFX = new Audio("./audio/drop1.mp3"),
   drop2SFX = new Audio("./audio/drop2.mp3"),
   drop3SFX = new Audio("./audio/drop3.mp3"),
-  drop4SFX = new Audio("./audio/drop4.mp3"),
-  drop5SFX = new Audio("./audio/drop5.mp3");
+  drop4SFX = new Audio("./audio/drop4.mp3");
 
 const dealerSumEl = document.getElementById("dealer-sum-el");
 const playerSumEl = document.getElementById("player-sum-el");
@@ -495,7 +494,7 @@ function freeChips() {
 }
 
 addEventListener("beforeunload", () => {
-  stats.chips += currentBet;
+  clearBet();
   renderStats();
 });
 
